@@ -3,6 +3,8 @@ package algorithms.java;
 public class LinkedList {
     private Node root;
     private  int size;
+
+    //private Node last;
     public void add(int value){
         if (root == null) {
             root = new Node(value);
@@ -31,6 +33,27 @@ public class LinkedList {
         currentNode.next = newNode;
         size++;
 
+
+    }
+
+    public int getSize(){
+        return size;
+    }
+    public void addRemove(int value, int index){
+        if (index == 0){
+            Node newNode = new Node(value);
+            newNode.next = root;
+            root = newNode;
+            size++;
+            removeAt(index+1);
+            return;
+        }
+
+        Node currentNode = getNode(index);
+        Node newNode = new Node(value);
+        currentNode.value = newNode.value;
+        //size++;
+        //removeAt(index+1);
 
     }
     public void print(){
@@ -95,9 +118,62 @@ public class LinkedList {
         }
         return currentNode;
     }
+    public void revers(){
+        int indexI = 0;
+        int indexJ = size-1;
+        int i = getValue(indexI);
+        int length = size;
+        int j = getValue(indexJ);
+        Node currentNodeI = getNode(indexI);
+        Node currentNodeJ = getNode(indexJ);
+
+
+        if (size > 1){
+            while (indexI < size / 2) {
+
+                addRemove(i, indexJ);
+                addRemove(j, indexI);
+                //currentNodeJ = temp;
+                indexI++;
+                indexJ--;
+
+
+                /*if (indexI == 0) {
+                    Node newNode = new Node(currentNodeJ.value);
+                    newNode.next = root;
+                    root = newNode;
+                    size++;
+                    removeAt(indexI + 1);
+                    return;
+                }
+
+                 */
+                /*Node currentNode1 = getNode(indexJ);
+                Node currentNode2 = getNode(indexI);
+                Node newNode1 = new Node(currentNodeI.value);
+                Node newNode2 = new Node(currentNodeJ.value);
+                //Node temp = currentNode1;
+                currentNode1.value = newNode1.value;
+                currentNode2.value = newNode2.value;
+
+                 */
+
+                /*Node temp = new Node(currentNodeJ.value);
+                Node newNode = new Node(currentNodeI.value);
+                currentNodeJ.value = newNode.value;
+                currentNodeI.value = temp.value;
+
+                 */
+
+            }
+
+        }
+        else System.out.println("size is minimal");
+    }
     private class Node{
         int value;
         Node next;
+
         Node(){}
         Node(int _value){
             this.value = _value;
