@@ -4,19 +4,31 @@ public class LinkedList {
     private Node root;
     private  int size;
 
-    //private Node last;
+    private Node last;
     public void add(int value){
+        Node node = new Node(value);
         if (root == null) {
-            root = new Node(value);
+            root = node;
+            last = root;
             size = 1;
             return;
+        }else {
+            last.next = node;
+            node.previous = last.next;
+            last = node;
+            size++;
+
         }
-        Node currentNode = root;
+
+       /* Node currentNode = root;
         while (currentNode.next != null){
             currentNode = currentNode.next;
         }
         currentNode.next = new Node(value);
+        last = currentNode.next;
         size++;
+
+        */
     }
     public void addAt(int value, int index){
         if (index < 0 || index > size)
@@ -24,6 +36,7 @@ public class LinkedList {
         if (index == 0){
             Node newNode = new Node(value);
             newNode.next = root;
+            last = root;
             root = newNode;
             size++;
             return;
@@ -52,6 +65,7 @@ public class LinkedList {
         Node currentNode = getNode(index);
         Node newNode = new Node(value);
         currentNode.value = newNode.value;
+
         //size++;
         //removeAt(index+1);
 
@@ -118,24 +132,46 @@ public class LinkedList {
         }
         return currentNode;
     }
-    public void revers(){
-        int indexI = 0;
+    public void revers() {
+        if (size > 1){
+            last = root;
+            Node currentNode = root.next;
+            root.next = null;
+            while (currentNode != null){
+                Node next = currentNode.next;
+                currentNode.next = root;
+                root = currentNode;
+                currentNode = next;
+            }
+        }
+
+        /*int indexI = 0;
         int indexJ = size-1;
         int i = getValue(indexI);
         int length = size;
         int j = getValue(indexJ);
         Node currentNodeI = getNode(indexI);
         Node currentNodeJ = getNode(indexJ);
-
+        Node currentNode = root;
+        Node lastNode = last;
 
         if (size > 1){
-            while (indexI < size / 2) {
+            while (indexI < 2) {
+                    Node next = currentNode.next;
+                    Node previous = lastNode.previous;
+                    Node temp = currentNode;
+                    currentNode = lastNode;
+                    lastNode = temp;
+                    currentNode = next;
+                    lastNode = previous;
+        */
 
-                addRemove(i, indexJ);
-                addRemove(j, indexI);
-                //currentNodeJ = temp;
-                indexI++;
-                indexJ--;
+
+        //addRemove(i, indexJ);
+        //addRemove(j, indexI);
+        //currentNodeJ = temp;
+        //indexI++;
+        //indexJ--;
 
 
                 /*if (indexI == 0) {
@@ -164,15 +200,19 @@ public class LinkedList {
                 currentNodeI.value = temp.value;
 
                  */
+        /*
 
             }
 
         }
         else System.out.println("size is minimal");
+
+    */
     }
     private class Node{
         int value;
         Node next;
+        Node previous;
 
         Node(){}
         Node(int _value){
@@ -182,6 +222,11 @@ public class LinkedList {
         Node(int _value, Node _next){
             this.value = _value;
             this.next = _next;
+        }
+        Node(int _value, Node _next, Node _previous){
+            this.value = _value;
+            this.next = _next;
+            this.previous = _previous;
         }
     }
 }
